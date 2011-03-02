@@ -15,8 +15,8 @@ public class PollandFactorization {
 			a = crypto.fastSq(N, a, j);
 			d = crypto.gcd(a-1, N);
 			if(d>1 && d<N){
-				System.out.println("2^"+j+" -1 = "+a+" (mod "+N+")");
-				System.out.println("gcd(2^"+j+"-1,"+N+") = "+d);
+				System.out.println("2^"+j+"! -1 = "+a+" (mod "+N+")");
+				System.out.println("gcd(2^"+j+"!-1,"+N+") = "+d);
 				
 				return d;
 			}
