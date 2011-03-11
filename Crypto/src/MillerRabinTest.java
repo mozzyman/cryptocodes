@@ -13,26 +13,23 @@ public class MillerRabinTest {
 		int k = 0;
 		while(n_1%2==0)
 		{
-			System.out.println(n_1+" k="+k);
 			
 			k++;
 			n_1 = n_1/2;
-			System.out.println(n_1+" k="+k);
+			
 			
 		}
 		long q =(long) n_1;
 		
 		a = crypto.fastSq(n, a, q);
-		System.out.println("a mod n "+a%n);
 		if(a%n==1){
-			System.out.println(a%n+" returning");
 			return 0;
 			
 		}
 		
 		for(int i = 0; i<k;i++)
 		{
-			System.out.println(a%n);
+			
 			if(a%n ==n-1) 
 				return 0;
 			a = (a*a)%n;
@@ -43,20 +40,25 @@ public class MillerRabinTest {
 	public static void main(String[] args)
 	{
 		MillerRabinTest mr = new MillerRabinTest();
-		long n = 118901527;
-		long a = 1;
-		int composite = 0;
-		while(composite == 0 && a<100)
+		long[] allNumbers = {1105,294409,118901509,118901521, 118901527,118915387}; 
+		for(long n:allNumbers)
 		{
-		  a++;
-		  composite = mr.millerRabinTest(n, a);
-		  System.out.println(a+" "+composite);
+			
+			//long n = Long.parseLong(aNumber);
+			long a = 1;
+			int composite = 0;
+			while(composite == 0 && a<100)
+			{
+			  a++;
+			  composite = mr.millerRabinTest(n, a);
+			  //System.out.println(a+" "+composite);
+			}
+			
+			if(composite == 0)
+				System.out.println(n+" is prime");
+			else
+			
+				System.out.println(n+" is composite with witness "+a);
 		}
-		
-		if(composite == 0)
-			System.out.println(n+" is prime");
-		else
-		
-			System.out.println(n+" is composite with witness "+a);
 	}
 }
