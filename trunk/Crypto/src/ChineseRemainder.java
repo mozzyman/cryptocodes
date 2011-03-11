@@ -47,10 +47,12 @@ public class ChineseRemainder {
 			if(y<0)
 				y+= m[i+1];
 			
-			System.out.print("Step:"+i+"->x="+x+"+"+mi+"*"+y+"=");
+			//System.out.print("Step:"+i+"->x="+x+"+"+mi+"*"+y+"=");
 			
 			x = x + mi*y;
-			System.out.println(x);
+			
+			
+			//System.out.println(x);
 			
 			i++;
 		}

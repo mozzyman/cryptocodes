@@ -6,14 +6,14 @@ public class SquareRoot {
 
 	    public static List<Long> factor(long n) { 
 
-	        System.out.print("The prime factorization of " + n + " is: ");
+	       // System.out.print("The prime factorization of " + n + " is: ");
             List<Long> all = new ArrayList<Long>();
 	        // for each potential factor i
 	        for (long i = 2; i <= n / i; i++) {
 
 	            // if i is a factor of N, repeatedly divide it out
 	            while (n % i == 0) {
-	            	System.out.print(i+", ");
+	            	//System.out.print(i+", ");
 	            	if(!all.contains(i)){
 	            		all.add(i);
 	            		
@@ -27,10 +27,12 @@ public class SquareRoot {
 	        if (n > 1) 
 	        	{
 	        		all.add(n);
-	        		System.out.print(n);
+	        		//System.out.print(n);
 	        	}
 	        
-	        System.out.println("\n");
+	       // System.out.println("\n");
+	        if(all.size()==1)
+	        	all.add(Long.parseLong("1"));
 	        return all;
 
 	    }
@@ -89,9 +91,12 @@ public class SquareRoot {
 					tempA[zero] = a[zero];
 				
 			}
-			System.out.println("*******Steps of the Chinese Remainder Theorem*******");
+			//System.out.println("*******Steps of the Chinese Remainder Theorem*******");
 			root = ChineseRemainder.findSolution(tempA, m);
-			sq.add(root);
+			if(root<0)
+				root+=p;
+			if(!sq.contains(root))
+				sq.add(root);
 			
 		}
 		
@@ -118,7 +123,7 @@ public class SquareRoot {
 					long test = crypto.fastSq(aFactor, j, 2);
 					if(test==y2)
 					{
-						System.out.println("trial->"+j);
+						//System.out.println("trial->"+j);
 						sqRoot = j;
 						break;
 					}
@@ -129,8 +134,8 @@ public class SquareRoot {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		long n = 813;
-		long p = 868;
+		long n = 2;
+		long p = 13;
 		List<Long> sr = squareRoot(n, p);
 		
 		System.out.print("Square roots of "+n+" modulo "+p+" are : ");
