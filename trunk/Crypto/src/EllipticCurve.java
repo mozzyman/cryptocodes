@@ -50,7 +50,6 @@ public class EllipticCurve {
 		return true;
 	}
 	//if fp==0 then do general addition, otherwise do fp addition
-	
 	public Point addition(Point p1, Point p2, long fp) 
 	{
 		Point p3;
@@ -66,43 +65,52 @@ public class EllipticCurve {
 			return p1;
 		else
 		{
+			
 			if(p1.x==p2.x && p1.y==-p2.y)
 			  return Point.Zero;
+			
 			else
 			{
 				double slope = 0;
 				if(p1.isEqual(p2))
 				{
-					numerator = (3*p1.x*p1.x) + A;
+					numerator = 3*p1.x*p1.x + A;
 					denominator = 2*p1.y;
 					
 					
 				}
 				else
 				{
-					numerator = (p2.y-p1.y);
-					denominator = (p2.x-p1.x);
+					numerator = p2.y-p1.y;
+					denominator = p2.x-p1.x;
 					
 					
 				}
 				if(fp!=0)
 				{
-					if(denominator<0)
-						denominator+=fp;
 					denominator = crypto.inverse(fp, (long)denominator);
+					
 				}
 				else
 				{
 					denominator = 1/denominator;
 				}
 				slope = numerator*denominator;
+				if(fp!=0)
+					slope = slope%fp;
 				x3 = slope*slope - p1.x - p2.x;
+				
+				if(fp!=0){
+					x3 = x3%fp;
+					if(x3<0)
+						x3+=fp;
+				}
 				y3 = slope*(p1.x - x3) - p1.y;
 				
 				if(fp!=0)
 				{
-					x3 = x3%fp;
 					y3 = y3%fp;
+					
 					if(y3<0)
 						y3+=fp;
 				}
@@ -111,13 +119,14 @@ public class EllipticCurve {
 			}
 		}
 	}
+	//get points in Fp field
 	public List<Point> getPoints(int fp)
 	{
 		long y2 = 0;
 		List<Point> allPoints = new ArrayList<Point>();
 		allPoints.add(Point.Zero);
 		
-		for(int x=0;x<fp;x++)
+		for(int x=0; x<fp; x++)
 		{
 			//get y
 			y2 = x*x*x + this.A*x+this.B;
@@ -131,6 +140,30 @@ public class EllipticCurve {
 			
 		}
 		return allPoints;
+	}
+	//double-and-add algorithm for elliptic curves
+	//returns r = n*p
+	public Point doubleAndAdd(Point p, long n, long fp)
+	{
+		Point r = Point.Zero;
+		Point q = p;
+		while(n>0)
+		{
+			System.out.println(n+"->"+q.x+","+q.y+"->"+r.x+","+r.y);
+			
+			if(n%2==1)
+			{
+				r = addition(r, q, fp);
+				
+			}
+			q = addition(q,q,fp);
+			
+			n = n/2;
+			
+		}
+		//r = addition(r, q, fp);
+		return r;
+		
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -149,8 +182,20 @@ public class EllipticCurve {
         Point p1 =  allPoints.get(6);
         Point p2 =  allPoints.get(2);
         
-        Point q = ec.addition(p1, p2, fp);
+        Point q = ec.addition(p1, p1, fp);
         System.out.println("("+p1.x+","+p1.y+") + ("+p2.x+","+p2.y+") ="+"("+q.x+","+q.y+")");
+	
+        long n = 947;
+        long p = 3623;
+        Point P = new Point(6, 730);
+        EllipticCurve ec2 = new EllipticCurve(14, 19);
+		Point r = ec2.doubleAndAdd(P, n, p);
+	    System.out.println(r.x+","+r.y);
+	   
+//	   
+	   
+	  
+		
 	}
 
 }
