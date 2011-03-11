@@ -88,6 +88,8 @@ public class EllipticCurve {
 				}
 				if(fp!=0)
 				{
+					if(denominator<0)
+						denominator+=fp;
 					denominator = crypto.inverse(fp, (long)denominator);
 					
 				}
@@ -142,14 +144,14 @@ public class EllipticCurve {
 		return allPoints;
 	}
 	//double-and-add algorithm for elliptic curves
-	//returns r = n*p
+	//returns r = n*p mod fp
 	public Point doubleAndAdd(Point p, long n, long fp)
 	{
 		Point r = Point.Zero;
 		Point q = p;
 		while(n>0)
 		{
-			System.out.println(n+"->"+q.x+","+q.y+"->"+r.x+","+r.y);
+			//System.out.println(n+"->"+q.x+","+q.y+"->"+r.x+","+r.y);
 			
 			if(n%2==1)
 			{
@@ -174,23 +176,28 @@ public class EllipticCurve {
 		EllipticCurve ec = new EllipticCurve(A, B);
 		
         List<Point> allPoints = ec.getPoints(fp);
+        System.out.println("Points in E(F"+fp+") are :");
         for(Point p:allPoints)
         {
         	System.out.println("("+p.x+","+p.y+")");
         }
-        //addition
+        //addition test
         Point p1 =  allPoints.get(6);
         Point p2 =  allPoints.get(2);
         
-        Point q = ec.addition(p1, p1, fp);
+        Point q = ec.addition(p1, p2, fp);
+        System.out.println("Addition test->");
         System.out.println("("+p1.x+","+p1.y+") + ("+p2.x+","+p2.y+") ="+"("+q.x+","+q.y+")");
 	
+        //double and add : nP mod p
         long n = 947;
         long p = 3623;
         Point P = new Point(6, 730);
         EllipticCurve ec2 = new EllipticCurve(14, 19);
 		Point r = ec2.doubleAndAdd(P, n, p);
-	    System.out.println(r.x+","+r.y);
+		System.out.println("double-and-add algorithm for elliptic curve->");
+        
+	    System.out.println(n+"*("+P.x+","+P.y +") mod "+p +"= ("+r.x+","+r.y+")");
 	   
 //	   
 	   
