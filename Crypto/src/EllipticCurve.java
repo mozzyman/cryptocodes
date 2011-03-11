@@ -28,6 +28,10 @@ class Point{
 		}
 		return false;
 	}
+	String print()
+	{
+		return "("+this.x+","+this.y+")";
+	}
 }
 public class EllipticCurve {
 
@@ -167,6 +171,8 @@ public class EllipticCurve {
 		return r;
 		
 	}
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int A = 3;
