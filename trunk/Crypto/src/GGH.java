@@ -131,39 +131,38 @@ public class GGH {
 		
 		GGH ggh = new GGH();
 		
-		
-        
 		//example 6.36, page 385 of the Intro to math. crypto.
-		double [][] v2 = {{-97, 19, 19},
+		double [][] vExample = {{-97, 19, 19},
 		         {-36, 30, 86},
 		         {-184,-64, 78}};
 
-		double[][] w2 = {{-4179163, -1882253, 583183},
+		double[][] wExample = {{-4179163, -1882253, 583183},
 		         {-3184353 ,-1434201, 444361},
 		         {-5277320 ,-2376852, 736426}};
-		AliceGGH a2 = new AliceGGH(v2);
-		double hr = ggh.getHadamardRatio(a2.basis);
+		AliceGGH aExample = new AliceGGH(vExample);
+		double hr = ggh.getHadamardRatio(aExample.basis);
 		System.out.println("Haramard ratio->"+hr);
 		
-		Matrix wm = new Matrix(w2);
-		double[][] e = new double[][]{{-79081427,-35617462, 11035473}};
-		Matrix encrypted = new Matrix(e);
+		Matrix wmExample = new Matrix(wExample);
+		double[][] encryptedExample = new double[][]{{-79081427,-35617462, 11035473}};
+		Matrix encrypted = new Matrix(encryptedExample);
 		
 		System.out.println("Encrypted message:");
 		encrypted.print(2, 2);
 		
 		System.out.println("**Message decryption starts**");
-		Matrix msg = a2.decryptBabai(encrypted, wm);
+		Matrix msg = aExample.decryptBabai(encrypted, wmExample);
 		System.out.println("Decrypted message with private basis->");
 		msg.print(3, 3);
 		
 		System.out.println("Message decrypt message with Public basis");
-		a2.basis = wm;
-		msg = a2.decryptBabai(encrypted, wm);
+		aExample.basis = wmExample;
+		msg = aExample.decryptBabai(encrypted, wmExample);
 		System.out.println("Decrypted message with public basis->");
 		msg.print(3, 3);
 		
-		//excercise 6.19
+		/************************excercise 6.19*********/
+		//
 		double [][] v = {{58, 53,-68},
 		         {-110,-112, 35},
 		         {-10,-119, 123}};
