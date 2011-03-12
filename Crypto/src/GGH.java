@@ -154,9 +154,14 @@ public class GGH {
 		
 		System.out.println("**Message decryption starts**");
 		Matrix msg = a2.decryptBabai(encrypted, wm);
-		System.out.println("Decrypted message->");
+		System.out.println("Decrypted message with private basis->");
 		msg.print(3, 3);
 		
+		System.out.println("Message decrypt message with Public basis");
+		a2.basis = wm;
+		msg = a2.decryptBabai(encrypted, wm);
+		System.out.println("Decrypted message with public basis->");
+		msg.print(3, 3);
 		
 		//excercise 6.19
 		double [][] v = {{58, 53,-68},
@@ -197,7 +202,12 @@ public class GGH {
 		System.out.println("Perturbation->");
 		perturbation.print(2, 2);
 		
-		
+		//decrypt bob's message with public basis
+		System.out.println("Message decrypt message with public basis");
+		a.basis = W;
+		msg = a.decryptBabai(encrypted, W);
+		System.out.println("Decrypted message with public basis->");
+		msg.print(3, 3);
 	}
 
 }
