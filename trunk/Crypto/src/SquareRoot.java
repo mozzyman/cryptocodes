@@ -49,23 +49,29 @@ public class SquareRoot {
 		long[] m = new long[factors.size()];
 		
 		int i = 0;
+		int notfound = 0;
 		for(long aFactor:factors)
 		{
 			
 			m[i] = aFactor;
-			
 			//find mod
 			y2 = n % aFactor;
 			if(y2==1)
 				a[i] = 1;
 			else
+			{
                a[i] = getSquareRoot(y2, aFactor);
+               if(a[i]==Long.MIN_VALUE)
+            	   notfound++;
+               
+			}
 			
             
 			i++;
 		  	
 		}
-		
+		if(notfound==i)
+			return null;
 		//generate all square roots
 		int nRoots = (int) Math.pow(2, a.length);
 		long[] tempA = new long[a.length];
@@ -107,7 +113,7 @@ public class SquareRoot {
 
 	private static long getSquareRoot(long y2, long aFactor) {
 		
-		    long sqRoot = 1;
+		    long sqRoot = Long.MIN_VALUE;
 			//check if aFactor is 3 mod 4
 			if(aFactor % 4 ==3)
 			{
@@ -118,12 +124,13 @@ public class SquareRoot {
 			else
 			{
 				//trial and error
+				//if(y2==1 || y2==) 
 				for(long j=0;j<y2; j++)
 				{
 					long test = crypto.fastSq(aFactor, j, 2);
 					if(test==y2)
 					{
-						//System.out.println("trial->"+j);
+						
 						sqRoot = j;
 						break;
 					}
@@ -134,14 +141,18 @@ public class SquareRoot {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		long n = 2;
+		long n = 8;
 		long p = 13;
 		List<Long> sr = squareRoot(n, p);
 		
-		System.out.print("Square roots of "+n+" modulo "+p+" are : ");
-		for(long aRoot:sr)
-			System.out.print(aRoot+", ");
-		
+		if(sr==null)
+			System.out.println("square root does not exist");
+		else
+		{
+			System.out.print("Square roots of "+n+" modulo "+p+" are : ");
+			for(long aRoot:sr)
+				System.out.print(aRoot+", ");
+		}
 	}
 
 }
