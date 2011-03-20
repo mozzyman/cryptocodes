@@ -3,6 +3,7 @@ public class KnapSackCryptoSystem {
 
 	public static void main(String[] args)
 	{
+		//exercise 6.3
 		long A = 4392;
 		long B = 8387;
 		long M[] = {5186, 2779, 5955, 2307, 6599, 6771, 6296, 7306, 4115, 7039};
